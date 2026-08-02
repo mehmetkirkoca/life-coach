@@ -21,11 +21,17 @@
               v-for="(val, index) in selected" 
               :key="val" 
               class="selected-item-card"
-              @click="toggleValue(val)"
+              draggable="true"
+              @dragstart="handleDragStart($event, index)"
+              @dragover.prevent
+              @dragenter="handleDragEnter($event, index)"
+              @dragend="handleDragEnd"
+              :class="{ 'is-dragging': dragIndex === index }"
             >
+              <span class="drag-handle">☰</span>
               <span class="rank">#{{ index + 1 }}</span>
               <span class="name">{{ $t(`values.list.${val}`) }}</span>
-              <span class="remove-btn">×</span>
+              <span class="remove-btn" @click.stop="removeValue(val)">×</span>
             </div>
             <div v-if="selected.length === 0" key="empty" class="empty-selection">
               <span class="hint-icon">💎</span>
@@ -98,6 +104,8 @@ const ALL_VALUES = [
 
 const selected = ref<string[]>([...store.selectedValues])
 
+const dragIndex = ref<number | null>(null)
+
 function toggleValue(val: string) {
   const index = selected.value.indexOf(val)
   if (index >= 0) {
@@ -109,6 +117,35 @@ function toggleValue(val: string) {
       selected.value.push(val)
     }
   }
+}
+
+function removeValue(val: string) {
+  const index = selected.value.indexOf(val)
+  if (index >= 0) {
+    selected.value.splice(index, 1)
+  }
+}
+
+function handleDragStart(event: DragEvent, index: number) {
+  dragIndex.value = index
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = 'move'
+    event.dataTransfer.setData('text/plain', index.toString())
+  }
+}
+
+function handleDragEnter(_event: DragEvent, targetIndex: number) {
+  if (dragIndex.value === null || dragIndex.value === targetIndex) return
+  
+  const temp = selected.value[dragIndex.value]
+  selected.value.splice(dragIndex.value, 1)
+  selected.value.splice(targetIndex, 0, temp)
+  
+  dragIndex.value = targetIndex
+}
+
+function handleDragEnd() {
+  dragIndex.value = null
 }
 
 // Watch selected values deeply and save instantly to the Pinia store / localStorage
@@ -171,16 +208,28 @@ watch(
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 0.75rem;
-  cursor: pointer;
+  cursor: grab;
   transition: all 0.2s;
+  user-select: none;
+}
+.selected-item-card:active {
+  cursor: grabbing;
 }
 .selected-item-card:hover {
-  border-color: var(--accent-danger);
-  background: rgba(239, 68, 68, 0.04);
+  border-color: var(--accent-secondary);
+  background: rgba(255, 255, 255, 0.03);
 }
-.selected-item-card:hover .remove-btn {
-  color: var(--accent-danger);
-  transform: scale(1.2);
+.selected-item-card.is-dragging {
+  opacity: 0.4;
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.drag-handle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: grab;
+  margin-right: 0.15rem;
 }
 
 .rank {
@@ -198,6 +247,14 @@ watch(
   color: var(--text-muted);
   font-size: 1.2rem;
   transition: all 0.2s;
+  cursor: pointer;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+}
+.remove-btn:hover {
+  color: var(--accent-danger) !important;
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.1);
 }
 
 .empty-selection {

@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  coaching-app:
+    build: .
+    container_name: interactive-coaching-container
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./coaching_state.json:/app/coaching_state.json
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

@@ -2,8 +2,7 @@
   <nav class="navbar">
     <div class="nav-brand">
       <router-link to="/dashboard" class="logo">
-        <span class="logo-icon">🔮</span>
-        <span class="logo-text">AURA COACH</span>
+        <span class="logo-text">Life COACH</span>
       </router-link>
     </div>
 

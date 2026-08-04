@@ -226,7 +226,7 @@ export default {
       who: 'Who will help me?',
       obstacle: 'What is the obstacle & how will I overcome it?',
       commitment: 'WILL (Decision & Commitment)',
-      footer: 'Created by Aura Coach on {date}.'
+      footer: 'Created by Life COACH on {date}.'
     }
   }
 }

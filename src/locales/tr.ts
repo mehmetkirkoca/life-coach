@@ -226,7 +226,7 @@ export default {
       who: 'Kimlerden yardım alacağım?',
       obstacle: 'Engel ne ve nasıl aşarım?',
       commitment: 'ISMARLAMA (Karar & Taahhüt)',
-      footer: 'Aura Coach tarafından {date} tarihinde oluşturulmuştur.'
+      footer: 'Life COACH tarafından {date} tarihinde oluşturulmuştur.'
     }
   }
 }

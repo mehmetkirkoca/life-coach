@@ -7,7 +7,7 @@ import readline from 'readline';
 
 import { fileURLToPath } from 'url';
 
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATE_FILE = path.join(__dirname, 'coaching_state.json');
 

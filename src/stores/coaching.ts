@@ -49,6 +49,20 @@ export const AREA_COLORS: Record<LifeArea, string> = {
   growth: 'hsl(262, 82%, 60%)'       // Violet
 }
 
+export interface ColorScores {
+  red: number
+  yellow: number
+  green: number
+  blue: number
+}
+
+export interface ColorPercentages {
+  red: number
+  yellow: number
+  green: number
+  blue: number
+}
+
 export const useCoachingStore = defineStore('coaching', () => {
   const API_URL = 'http://localhost:3000/api/state'
 
@@ -145,6 +159,61 @@ export const useCoachingStore = defineStore('coaching', () => {
     syncToApi()
   }
 
+  // 4. Color Personality Test
+  const colorAnswers = ref<Record<number, Record<'red' | 'yellow' | 'green' | 'blue', number>>>({})
+  const colorCompleted = ref(false)
+
+  const savedColorAnswers = localStorage.getItem('coaching_color_answers')
+  if (savedColorAnswers) {
+    try {
+      colorAnswers.value = JSON.parse(savedColorAnswers)
+      colorCompleted.value = Object.keys(colorAnswers.value).length >= 16
+    } catch (e) {
+      console.error('Failed to parse color answers from local storage', e)
+    }
+  }
+
+  const colorScores = computed<ColorScores>(() => {
+    const totals: ColorScores = { red: 0, yellow: 0, green: 0, blue: 0 }
+    Object.values(colorAnswers.value).forEach(ans => {
+      totals.red += ans.red || 0
+      totals.yellow += ans.yellow || 0
+      totals.green += ans.green || 0
+      totals.blue += ans.blue || 0
+    })
+    return totals
+  })
+
+  const colorPercentages = computed<ColorPercentages>(() => {
+    const scores = colorScores.value
+    const total = scores.red + scores.yellow + scores.green + scores.blue
+    if (total === 0) {
+      return { red: 0, yellow: 0, green: 0, blue: 0 }
+    }
+    return {
+      red: Number(((scores.red / total) * 100).toFixed(1)),
+      yellow: Number(((scores.yellow / total) * 100).toFixed(1)),
+      green: Number(((scores.green / total) * 100).toFixed(1)),
+      blue: Number(((scores.blue / total) * 100).toFixed(1))
+    }
+  })
+
+  function saveColorAnswer(questionId: number, answerScores: Record<'red' | 'yellow' | 'green' | 'blue', number>) {
+    colorAnswers.value[questionId] = answerScores
+    localStorage.setItem('coaching_color_answers', JSON.stringify(colorAnswers.value))
+    if (Object.keys(colorAnswers.value).length >= 16) {
+      colorCompleted.value = true
+    }
+    syncToApi()
+  }
+
+  function resetColorTest() {
+    colorAnswers.value = {}
+    colorCompleted.value = false
+    localStorage.removeItem('coaching_color_answers')
+    syncToApi()
+  }
+
   // Language update
   function saveLocale(code: string) {
     locale.value = code
@@ -159,6 +228,10 @@ export const useCoachingStore = defineStore('coaching', () => {
 
   const isValuesCompleted = computed(() => {
     return selectedValues.value.length === 5
+  })
+
+  const isColorTestCompleted = computed(() => {
+    return colorCompleted.value
   })
 
   // ----------------------------------------------------
@@ -188,6 +261,11 @@ export const useCoachingStore = defineStore('coaching', () => {
           plans.value = data.plans
           localStorage.setItem('coaching_plans', JSON.stringify(data.plans))
         }
+        if (data.colorAnswers) {
+          colorAnswers.value = data.colorAnswers
+          localStorage.setItem('coaching_color_answers', JSON.stringify(data.colorAnswers))
+          colorCompleted.value = Object.keys(data.colorAnswers).length >= 16
+        }
         console.log('[MCP Sync] Synchronized coaching data successfully.')
       }
     } catch (err) {
@@ -210,7 +288,8 @@ export const useCoachingStore = defineStore('coaching', () => {
           locale: locale.value,
           ratings: ratings.value,
           values: selectedValues.value,
-          plans: plans.value
+          plans: plans.value,
+          colorAnswers: colorAnswers.value
         })
       })
     } catch (err) {
@@ -237,8 +316,15 @@ export const useCoachingStore = defineStore('coaching', () => {
     plans,
     savePlan,
     deletePlan,
+    colorAnswers,
+    colorCompleted,
+    colorScores,
+    colorPercentages,
+    saveColorAnswer,
+    resetColorTest,
     isAssessmentCompleted,
     isValuesCompleted,
+    isColorTestCompleted,
     syncFromApi
   }
 })

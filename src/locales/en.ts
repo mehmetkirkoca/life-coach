@@ -4,6 +4,7 @@ export default {
     assessment: 'Wheel of Life',
     values: 'Values Test',
     kamchi: 'T-GROW Plan',
+    colors: 'Personality Colors',
   },
   dashboard: {
     title: 'Personal Coaching Dashboard',
@@ -227,6 +228,188 @@ export default {
       obstacle: 'What is the obstacle & how will I overcome it?',
       commitment: 'WILL (Decision & Commitment)',
       footer: 'Created by Life COACH on {date}.'
+    }
+  },
+  colorTest: {
+    title: 'DISC Personality Colors Test',
+    subtitle: 'Discover your dominant and secondary personality colors with precise percentages across 16 psychometric questions.',
+    startTest: 'Start Test',
+    retakeTest: 'Retake Test',
+    questionCount: 'Question {current} / {total}',
+    selectRankHint: 'Rate each option based on how well it describes you (4 = Fits Most, 1 = Fits Least):',
+    nextQuestion: 'Next Question',
+    prevQuestion: 'Previous Question',
+    finishTest: 'Complete Test & View Results',
+    fitsMost: 'Fits Most',
+    fitsLeast: 'Fits Least',
+    points: 'pts',
+    strengths: 'Strengths',
+    improvements: 'Growth Advice',
+    viewReport: 'Full Report',
+    colorNames: {
+      red: 'Red',
+      yellow: 'Yellow',
+      green: 'Green',
+      blue: 'Blue'
+    },
+    categories: {
+      decision_making: 'Decision-Making Style',
+      communication: 'Communication & Social Style',
+      stress_management: 'Stress & Pressure Management',
+      work_style: 'Work Style & Discipline',
+      problem_solving: 'Problem Solving Approach',
+      teamwork: 'Teamwork & Role',
+      motivation: 'Core Motivation Source',
+      conflict_resolution: 'Conflict Resolution Style'
+    },
+    q1: {
+      title: 'When you need to make an important and urgent decision, how do you usually act?',
+      red: 'I take quick, decisive action and initiative directly.',
+      yellow: 'I talk to people around me and make an exciting, innovative decision.',
+      green: 'I consult the team or family to find a harmonious middle ground.',
+      blue: 'I thoroughly analyze data, rules, and risks to make a logical decision.'
+    },
+    q2: {
+      title: 'How do you behave when joining a new social group or team?',
+      red: 'I focus on setting direction, defining goals, or taking leadership.',
+      yellow: 'I immediately meet people, joke around, and build an energetic vibe.',
+      green: 'I listen calmly with a smile and adapt to the environment.',
+      blue: 'I first observe the room, analyze the structure and people before engaging.'
+    },
+    q3: {
+      title: 'How do you react when things go wrong under high pressure?',
+      red: 'I take control, give direct instructions, and push through obstacles.',
+      yellow: 'I use humor and optimism to relieve stress and boost morale.',
+      green: 'I stay calm, patiently soothe the room, and offer support.',
+      blue: 'I analyze processes and errors to focus on finding the root cause.'
+    },
+    q4: {
+      title: 'How would you describe your desk, digital space, and time management?',
+      red: 'Results-oriented; fast access and speed matter more than perfection.',
+      yellow: 'Colorful, dynamic, flexible; sometimes messy but creative.',
+      green: 'Peaceful, cozy, orderly; I prefer familiar routines and calm.',
+      blue: 'Highly organized, meticulously filed, structured, and systematic.'
+    },
+    q5: {
+      title: 'When facing a complex problem in a project, what is your top priority?',
+      red: 'Finding the fastest solution to finish the project immediately.',
+      yellow: 'Brainstorming creative and engaging new ideas.',
+      green: 'Supporting team members to reach a unified solution together.',
+      blue: 'Conducting a step-by-step, methodical, error-free analysis.'
+    },
+    q6: {
+      title: 'Which role feels most comfortable for you in group work?',
+      red: 'The leader who sets goals and assigns tasks.',
+      yellow: 'The idea generator who motivates the team and presents.',
+      green: 'The harmonious team player who supports and holds everyone together.',
+      blue: 'The strategist who handles planning, quality control, and reporting.'
+    },
+    q7: {
+      title: 'What motivates you the most in life?',
+      red: 'Overcoming challenges, gaining power, and delivering tangible results.',
+      yellow: 'Recognition, affection, popularity, and fun experiences.',
+      green: 'Peaceful relationships, feeling secure, and helping others.',
+      blue: 'Excellence, accuracy, expertise, and acquiring deep knowledge.'
+    },
+    q8: {
+      title: 'How do you handle a disagreement with someone?',
+      red: 'I boldly defend my viewpoint and debate until convincing them.',
+      yellow: 'I try to find a middle ground through dialogue to preserve relations.',
+      green: 'I avoid conflict and might yield to keep the peace.',
+      blue: 'I present logical evidence and data to objectively prove my point.'
+    },
+    q9: {
+      title: 'What is your primary focus when starting a new task?',
+      red: 'What the goal is and how quickly it can be completed.',
+      yellow: 'How exciting and enjoyable the task is going to be.',
+      green: 'Who I will be working with and how relationships will go.',
+      blue: 'The specific details, guidelines, and quality standards.'
+    },
+    q10: {
+      title: 'Which best describes your communication style?',
+      red: 'Clear, direct, concise, and results-focused.',
+      yellow: 'Enthusiastic, friendly, storytelling, and persuasive.',
+      green: 'Gentle, patient, good listener, and empathetic.',
+      blue: 'Careful, measured, logical, and fact-based.'
+    },
+    q11: {
+      title: 'What is your immediate reaction to major changes or innovations?',
+      red: 'Change is an opportunity; I adapt quickly and lead the way.',
+      yellow: 'A great adventure! Learning new things excites me.',
+      green: 'I approach with caution, worried about disrupting existing stability.',
+      blue: 'I do not step in without thoroughly analyzing risks and details.'
+    },
+    q12: {
+      title: 'What annoys or frustrates you the most?',
+      red: 'Wasted time, indecisiveness, and slowness.',
+      yellow: 'Monotony, isolation, and boring strict rules.',
+      green: 'Arguments, tension, rudeness, and sudden ambiguity.',
+      blue: 'Carelessness, lack of discipline, mistakes, and superficiality.'
+    },
+    q13: {
+      title: 'How do you approach the risk of failure?',
+      red: 'I do not fear taking risks; if I fail, I try again immediately.',
+      yellow: 'I remain optimistic and look for new paths without getting stuck.',
+      green: 'I prefer staying in the safe zone to minimize risks.',
+      blue: 'I calculate all potential risks beforehand and prepare plan B & C.'
+    },
+    q14: {
+      title: 'How do you usually react when receiving criticism?',
+      red: 'I may become defensive or view criticism as a challenge to win.',
+      yellow: 'I might take it personally, but I quickly try to lift my mood.',
+      green: 'I receive it quietly and compromise to avoid hurting others.',
+      blue: 'I analyze whether the criticism is logical and backed by valid facts.'
+    },
+    q15: {
+      title: 'If you had a completely free day, what would you choose to do?',
+      red: 'Set a new goal or engage in a competitive/sports activity.',
+      yellow: 'Meet friends, have fun, and join vibrant social events.',
+      green: 'Spend peaceful, cozy, relaxing time at home with loved ones.',
+      blue: 'Read a book, dive deep into a hobby, or do research.'
+    },
+    q16: {
+      title: 'In your opinion, what makes an ideal leader?',
+      red: 'Bold, decisive, and results-driven.',
+      yellow: 'Inspirational, visionary, and cheerful.',
+      green: 'Fair, listening, supportive, and trustworthy.',
+      blue: 'Expert, competent, just, and disciplined.'
+    },
+    results: {
+      title: 'Your Personality Colors Analysis Report',
+      dominantColor: 'Your Dominant Color',
+      secondaryColor: 'Your Secondary Color',
+      breakdownTitle: 'Precise Color Percentage Breakdown',
+      summaryTip: 'These percentages represent your natural behavioral tendencies in daily life, decision-making, and under pressure.',
+      colors: {
+        red: {
+          name: '🔴 Red (Dominant)',
+          traits: 'Decisive, Results-Oriented, Bold, Direct',
+          description: 'You make fast decisions, face obstacles head-on, and step up as a leader to achieve your goals.',
+          strengths: 'Goal focus, crisis management, courage, and high self-confidence.',
+          improvements: 'Practice patience, listen actively to others, and avoid overlooking subtle details.'
+        },
+        yellow: {
+          name: '🟡 Yellow (Influential)',
+          traits: 'Enthusiastic, Social, Creative, Persuasive',
+          description: 'You connect effortlessly with people, bring vibrant energy, and inspire others with your positive outlook.',
+          strengths: 'Communication power, optimism, creativity, and relationship building.',
+          improvements: 'Focus on time management, detail orientation, and completing routine tasks.'
+        },
+        green: {
+          name: '🟢 Green (Steady)',
+          traits: 'Harmonious, Empathetic, Reliable, Calm',
+          description: 'You seek depth and peace in relationships, serving as a patient listener and the anchor of your team/family.',
+          strengths: 'Empathy, loyalty, patience, conflict de-escalation, and stability.',
+          improvements: 'Learn to say no, embrace change more openly, and prioritize your own needs.'
+        },
+        blue: {
+          name: '🔵 Blue (Conscientious)',
+          traits: 'Detail-Oriented, Logical, Disciplined, Perfectionist',
+          description: 'You base actions on data and logic, maintaining high quality standards and structured precision.',
+          strengths: 'Precision, analytical thinking, reliability, and systematic work.',
+          improvements: 'Flex your perfectionism, speed up decision processes, and tolerate ambiguity.'
+        }
+      }
     }
   }
 }

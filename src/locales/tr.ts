@@ -4,6 +4,7 @@ export default {
     assessment: 'Denge Çarkı',
     values: 'Değerler Testi',
     kamchi: 'KAMÇI Planı',
+    colors: 'Kişilik Renkleri',
   },
   dashboard: {
     title: 'Kişisel Koçluk Paneli',
@@ -227,6 +228,188 @@ export default {
       obstacle: 'Engel ne ve nasıl aşarım?',
       commitment: 'ISMARLAMA (Karar & Taahhüt)',
       footer: 'Life COACH tarafından {date} tarihinde oluşturulmuştur.'
+    }
+  },
+  colorTest: {
+    title: 'DISC Kişilik Renkleri Testi',
+    subtitle: '16 psikometrik soru ile baskın ve ikincil kişilik renklerinizi hassas yüzdelerle keşfedin.',
+    startTest: 'Testi Başlat',
+    retakeTest: 'Testi Yeniden Çöz',
+    questionCount: 'Soru {current} / {total}',
+    selectRankHint: 'Sorudaki seçenekleri kendinizi tanımlama derecesine göre derecelendirin (4 = En Çok Uyan, 1 = En Az Uyan):',
+    nextQuestion: 'Sonraki Soru',
+    prevQuestion: 'Önceki Soru',
+    finishTest: 'Testi Tamamla ve Sonuçları Gör',
+    fitsMost: 'En Çok',
+    fitsLeast: 'En Az',
+    points: 'P.',
+    strengths: 'Güçlü Yönler',
+    improvements: 'Gelişim Alanları',
+    viewReport: 'Detaylı Rapor',
+    colorNames: {
+      red: 'Kırmızı',
+      yellow: 'Sarı',
+      green: 'Yeşil',
+      blue: 'Mavi'
+    },
+    categories: {
+      decision_making: 'Karar Alma Tarzı',
+      communication: 'İletişim ve Sosyallik',
+      stress_management: 'Stres & Baskı Yönetimi',
+      work_style: 'Çalışma & Düzen Anlayışı',
+      problem_solving: 'Problem Çözme Yaklaşımı',
+      teamwork: 'Ekip Çalışması ve Rolü',
+      motivation: 'Temel Motivasyon Kaynağı',
+      conflict_resolution: 'Çatışma Çözme Tarzı'
+    },
+    q1: {
+      title: 'Önemli ve acil bir karar almanız gerektiğinde genellikle nasıl hareket edersiniz?',
+      red: 'Hızlı, kararlı ve inisiyatif alarak doğrudan harekete geçerim.',
+      yellow: 'Çevremdekilerle konuşarak heyecan verici ve yenilikçi bir karar alırım.',
+      green: 'Ekibin veya ailemin fikrini alır, kimseyi mağdur etmeyecek ortak bir yol bulurum.',
+      blue: 'Verileri, kuralları ve riskleri detaylıca analiz eder, mantıklı kararlar veririm.'
+    },
+    q2: {
+      title: 'Yeni bir sosyal ortama veya ekibe girdiğinizde tavrınız nasıl olur?',
+      red: 'Ortama yön vermeye, hedefleri belirlemeye veya liderlik etmeye odaklanırım.',
+      yellow: 'Hemen insanlarla tanışır, espri yapar ve enerjik bir atmosfer yaratırım.',
+      green: 'Sakin ve güler yüzlü bir şekilde dinler, ortama uyum sağlarım.',
+      blue: 'Önce ortamı gözlemler, düzeni ve insanları analiz ettikten sonra iletişime geçerim.'
+    },
+    q3: {
+      title: 'İşler yolunda gitmediğinde ve yüksek baskı altına girdiğinizde nasıl tepki verirsiniz?',
+      red: 'Kontrolü ele alır, doğrudan talimatlar verir ve engelleri zorlayarak aşarım.',
+      yellow: 'Mizah ve iyimserlikle stresi düşürmeye, moral vermeye çalışırım.',
+      green: 'Sakinliğimi korur, sabırla ortamı yatıştırmaya ve destek olmaya çalışırım.',
+      blue: 'Süreçleri ve hataları inceleyerek problemin kök nedenini bulmaya odaklanırım.'
+    },
+    q4: {
+      title: 'Çalışma masanız, dijital alanınız ve zaman yönetimi anlayışınız nasıldır?',
+      red: 'Sonuç odaklıdır; hızlı erişim ve hız benim için şıklık ve düzenden önce gelir.',
+      yellow: 'Renkli, dinamik ve esnektir; zaman zaman dağınık ama yaratıcı bir ortamım vardır.',
+      green: 'Huzurlu, rahat ve düzenlidir; alışılmış rutinleri ve sakinliği severim.',
+      blue: 'Aşırı düzenli, detaylı dosyalanmış, kuralcı ve sistemlidir.'
+    },
+    q5: {
+      title: 'Bir projede karmaşık bir sorunla karşılaştığınızda önceliğiniz nedir?',
+      red: 'En hızlı çözümü bularak projeyi derhal bitirmek.',
+      yellow: 'Beyin fırtınası yapıp yaratıcı ve ilgi çekici yollar bulmak.',
+      green: 'Ekip üyelerini destekleyip birlik içinde çözüme ulaşmak.',
+      blue: 'Adım adım, metodik ve hatasız bir analiz yapmak.'
+    },
+    q6: {
+      title: 'Bir grup çalışmasında kendinizi en çok hangi rolde konforlu hissedersiniz?',
+      red: 'Gruba liderlik eden, hedefleri ve görevleri dağıtan kişi.',
+      yellow: 'Fikir üreten, grubu motive eden ve sunumu yapan kişi.',
+      green: 'Uyum sağlayan, yardım eden ve ekibi bir arada tutan kişi.',
+      blue: 'Planlama, kalite kontrol ve raporlamayı üstlenen kişi.'
+    },
+    q7: {
+      title: 'Sizi hayatta en çok ne motive eder?',
+      red: 'Zorlukları başarmak, güç kazanmak ve somut sonuçlar elde etmek.',
+      yellow: 'Takdir edilmek, sevilmek, popülerlik ve eğlenceli deneyimler.',
+      green: 'Huzurlu ilişkiler, güvende hissetmek ve başkalarına yardım etmek.',
+      blue: 'Mükemmellik, doğruluk, uzmanlık ve bilgi sahibi olmak.'
+    },
+    q8: {
+      title: 'Biriyle fikir ayrılığına düştüğünüzde nasıl bir duruş sergilersiniz?',
+      red: 'Kendi görüşümü cesurca savunur, ikna edene kadar tartışırım.',
+      yellow: 'Diyalogla ortayı bulmaya çalışır, ilişkiyi bozmamaya özen gösteririm.',
+      green: 'Çatışmadan kaçınır, uyuşmazlığı uzatmamak için alttan alabilirim.',
+      blue: 'Mantıklı kanıtlar ve veriler sunarak haklılığımı tarafsızca kanıtlarım.'
+    },
+    q9: {
+      title: 'Bir göreve başlarken ilk odaklandığınız şey nedir?',
+      red: 'Hedefin ne olduğu ve ne kadar sürede tamamlanacağı.',
+      yellow: 'Bu görevin ne kadar heyecan verici ve keyifli olduğu.',
+      green: 'Kimlerle birlikte çalışacağım ve ilişkilerin nasıl seyredeceği.',
+      blue: 'Görevin detayları, kuralları ve kalite standartları.'
+    },
+    q10: {
+      title: 'İletişim tarzınızı en iyi hangisi tanımlar?',
+      red: 'Net, doğrudan, kısa ve sonuca yönelik.',
+      yellow: 'Coşkulu, samimi, hikaye anlatan ve ikna edici.',
+      green: 'Yumuşak, sabırlı, iyi bir dinleyici ve empati kuran.',
+      blue: 'Dikkatli, ölçülü, mantıklı ve gerçeklere dayalı.'
+    },
+    q11: {
+      title: 'Değişim ve yeniliklerle karşılaştığınızda ilk hissiniz nedir?',
+      red: 'Yenilik bir fırsattır, hemen adapte olur ve öncülük ederim.',
+      yellow: 'Harika bir macera! Yeni şeyler öğrenmek beni heyecanlandırır.',
+      green: 'Önce temkinli yaklaşırım, mevcut düzenimin bozulmasından endişelenirim.',
+      blue: 'Değişimin risklerini ve detaylarını iyice incelemeden adım atmam.'
+    },
+    q12: {
+      title: 'Sizi en çok ne rahatsız eder veya çileden çıkarır?',
+      red: 'Zaman kaybı, kararsızlık ve yavaş hareket edilmesi.',
+      yellow: 'Monotonluk, yalnız kalmak ve sıkıcı kurallar.',
+      green: 'Kavga, gerginlik, nezaketsizlik ve ani belirsizlikler.',
+      blue: 'Dikkatsizlik, disiplinsizlik, hatalar ve yüzeysellik.'
+    },
+    q13: {
+      title: 'Başarısızlık riski olduğunda nasıl bir tavır alırsınız?',
+      red: 'Risk almaktan korkmam, başarısız olsam da tekrar denerim.',
+      yellow: 'İyimser kalır, olumsuzluğa takılmadan yeni yollar ararım.',
+      green: 'Güvenli bölgede kalmayı tercih eder, riskleri minimuma indiririm.',
+      blue: 'Tüm olası riskleri önceden hesaplayıp plan B, C hazırlarım.'
+    },
+    q14: {
+      title: 'Eleştiri aldığınızda genellikle tepkiniz ne olur?',
+      red: 'Savunmaya geçebilir veya eleştiriyi bir meydan okuma olarak görürüm.',
+      yellow: 'Kişisel algılayabilir ama hızlıca modumu yükseltmeye çalışırım.',
+      green: 'Sessizce karşılar, karşı tarafı kırmamak için uzlaşırım.',
+      blue: 'Eleştirinin mantıklı ve haklı bir temele dayanıp dayanmadığını sorgularım.'
+    },
+    q15: {
+      title: 'Bir günü boş geçirecek olsanız tercihiniz ne olurdu?',
+      red: 'Yeni bir hedef veya spor/rekabet dolu bir aktivite yapmak.',
+      yellow: 'Arkadaşlarımla buluşup eğlenmek ve sosyal etkinliklere katılmak.',
+      green: 'Sevdiklerimle evde huzurlu, sakin ve dinlendirici vakit geçirmek.',
+      blue: 'Kitap okumak, bir hobide derinleşmek veya araştırma yapmak.'
+    },
+    q16: {
+      title: 'Size göre ideal bir lider nasıl olmalıdır?',
+      red: 'Cesur, kararlı ve sonuç getiren.',
+      yellow: 'İlham veren, vizyoner ve neşeli.',
+      green: 'Adil, dinleyen, destekleyici ve güvenilir.',
+      blue: 'Uzman, yetkin, adil ve disiplinli.'
+    },
+    results: {
+      title: 'Kişilik Renkleri Analiz Raporunuz',
+      dominantColor: 'Baskın Renginiz',
+      secondaryColor: 'İkincil Renginiz',
+      breakdownTitle: 'Hassas Renk Dağılım Oranlarınız',
+      summaryTip: 'Bu oranlar, günlük yaşamda, kararlarınızda ve stres altındaki davranış tercihlerinizde gösterdiğiniz doğal ağırlıkları yansıtır.',
+      colors: {
+        red: {
+          name: '🔴 Kırmızı (Baskın / Dominant)',
+          traits: 'Kararlı, Sonuç Odaklı, Cesur, Doğrudan',
+          description: 'Hızlı karar alır, engellerle doğrudan yüzleşir ve hedeflerinize ulaşmak için liderlik üstlenirsiniz.',
+          strengths: 'Hedef odaklılık, kriz yönetimi, cesaret ve yüksek özgüven.',
+          improvements: 'Sabırlı olmaya, başkalarını dinlemeye ve detayları gözden kaçırmamaya özen gösterin.'
+        },
+        yellow: {
+          name: '🟡 Sarı (Etkileyici / Social)',
+          traits: 'Coşkulu, Sosyal, Yaratıcı, İkna Edici',
+          description: 'İnsanlarla kolayca iletişim kurar, ortama enerji katar ve pozitif yaklaşımınızla çevrenizi etkilersiniz.',
+          strengths: 'Yüksek iletişim gücü, iyimserlik, yaratıcılık ve ilişki kurma becerisi.',
+          improvements: 'Zaman yönetimine, detaylara odaklanmaya ve rutin işleri tamamlamaya dikkat edin.'
+        },
+        green: {
+          name: '🟢 Yeşil (Sabırlı / Steady)',
+          traits: 'Uyumlu, Empatik, Güvenilir, Huzur Veren',
+          description: 'İlişkilerde derinlik ve huzur arar, iyi bir dinleyici olarak ekibin ve ailenin çimentosu olursunuz.',
+          strengths: 'Empati, sadakat, sabır, çatışmaları yatıştırma ve istikrar.',
+          improvements: 'Hayır demeyi öğrenmeye, değişimlere daha açık olmaya ve kendi ihtiyaçlarınızı öne çıkarmaya odaklanın.'
+        },
+        blue: {
+          name: '🔵 Mavi (Analitik / Conscientious)',
+          traits: 'Detaycı, Mantıklı, Disiplinli, Mükemmeliyetçi',
+          description: 'Olayları verilere ve mantığa dayandırır, yüksek kalite standartları ve kurallar çerçevesinde hareket edersiniz.',
+          strengths: 'Detaycılık, analitik düşünme, güvenilirlik ve sistemli çalışma.',
+          improvements: 'Mükemmeliyetçiliği esnetmeye, karar alma süreçlerini hızlandırmaya ve belirsizlikleri tolere etmeye çalışın.'
+        }
+      }
     }
   }
 }

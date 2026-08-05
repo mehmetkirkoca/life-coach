@@ -27,6 +27,11 @@ const router = createRouter({
       path: '/kamchi',
       name: 'kamchi',
       component: () => import('../views/Kamchi.vue')
+    },
+    {
+      path: '/colors',
+      name: 'colors',
+      component: () => import('../views/ColorTest.vue')
     }
   ]
 })

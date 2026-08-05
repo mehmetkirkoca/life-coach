@@ -10,14 +10,17 @@
       <router-link to="/dashboard" class="nav-item">
         {{ $t('nav.dashboard') }}
       </router-link>
+      <router-link to="/colors" class="nav-item">
+        {{ $t('nav.colors') }}
+      </router-link>
       <router-link to="/assessment" class="nav-item">
         {{ $t('nav.assessment') }}
       </router-link>
-      <router-link to="/values" class="nav-item">
-        {{ $t('nav.values') }}
-      </router-link>
       <router-link to="/kamchi" class="nav-item">
         {{ $t('nav.kamchi') }}
+      </router-link>
+      <router-link to="/values" class="nav-item">
+        {{ $t('nav.values') }}
       </router-link>
     </div>
 

@@ -6,38 +6,48 @@
       <p class="subtitle">{{ $t('dashboard.subtitle') }}</p>
     </header>
 
+    <!-- 1. Kişilik Renkleri Özet Kartı (En Üstte) -->
+    <div class="glass-card colors-summary-card mb-6">
+      <div class="section-header">
+        <h3>🎨 {{ $t('colorTest.title') }}</h3>
+        <router-link v-if="store.isColorTestCompleted" to="/colors" class="btn btn-secondary btn-icon-only">
+          <Pencil :size="14" />
+        </router-link>
+      </div>
+
+      <div v-if="store.isColorTestCompleted" class="colors-dashboard-row mt-4">
+        <div class="color-badge-summary">
+          <span class="summary-label">{{ $t('colorTest.results.dominantColor') }}:</span>
+          <span class="summary-value">
+            {{ $t(`colorTest.results.colors.${dominantColor}.name`) }} (%{{ store.colorPercentages[dominantColor] }})
+          </span>
+        </div>
+        <div class="mini-progress-bars">
+          <div v-for="c in (['red', 'yellow', 'green', 'blue'] as const)" :key="c" class="mini-bar-item">
+            <span class="mini-label">{{ $t(`colorTest.colorNames.${c}`) }}</span>
+            <div class="mini-track">
+              <div class="mini-fill" :class="c" :style="{ width: `${store.colorPercentages[c]}%` }" />
+            </div>
+            <span class="mini-pct">%{{ store.colorPercentages[c] }}</span>
+          </div>
+        </div>
+        <router-link to="/colors" class="btn btn-secondary btn-sm">
+          {{ $t('colorTest.viewReport') }} →
+        </router-link>
+      </div>
+      <div v-else class="empty-state py-4">
+        <span class="empty-icon">🎨</span>
+        <p>{{ $t('colorTest.subtitle') }}</p>
+        <router-link to="/colors" class="btn btn-primary mt-3">
+          {{ $t('colorTest.startTest') }} →
+        </router-link>
+      </div>
+    </div>
+
     <!-- 3-Column Cockpit Grid -->
     <div class="dashboard-layout">
       
-      <!-- Column 1: Core Values Card -->
-      <div class="glass-card values-card">
-        <div class="section-header">
-          <h3>{{ $t('dashboard.valuesSummary') }}</h3>
-          <router-link v-if="store.isValuesCompleted" to="/values" class="btn btn-secondary btn-icon-only" :title="$t('values.title')">
-            <Pencil :size="14" />
-          </router-link>
-        </div>
-        <div v-if="store.isValuesCompleted" class="values-list">
-          <div 
-            v-for="(val, index) in store.selectedValues" 
-            :key="val" 
-            class="value-item"
-            :style="{ '--delay': index }"
-          >
-            <span class="value-rank">#{{ index + 1 }}</span>
-            <span class="value-text">{{ $t(`values.list.${val}`) }}</span>
-          </div>
-        </div>
-        <div v-else class="empty-state py-6">
-          <span class="empty-icon">💎</span>
-          <p>{{ $t('dashboard.valuesHint') }}</p>
-          <router-link to="/values" class="btn btn-accent mt-4">
-            {{ $t('dashboard.startValues') }}
-          </router-link>
-        </div>
-      </div>
-
-      <!-- Column 2: Radar Chart Card -->
+      <!-- 2. Yaşam Denge Çarkı Özeti -->
       <div class="glass-card chart-card">
         <div class="section-header">
           <h3>{{ $t('dashboard.wheelSummary') }}</h3>
@@ -57,7 +67,7 @@
         </div>
       </div>
 
-      <!-- Column 3: Active Commitments Card (WILL) -->
+      <!-- 3. Aktif Taahhütleriniz (ISMARLAMA) -->
       <div class="glass-card commitments-card">
         <div class="section-header">
           <h3>{{ $t('dashboard.activeCommitments') }}</h3>
@@ -96,6 +106,34 @@
           <p class="px-4">{{ $t('dashboard.noCommitments') }}</p>
           <router-link to="/kamchi" class="btn btn-primary mt-4">
             {{ $t('dashboard.newPlanBtn') }}
+          </router-link>
+        </div>
+      </div>
+
+      <!-- 4. Temel Değerleriniz -->
+      <div class="glass-card values-card">
+        <div class="section-header">
+          <h3>{{ $t('dashboard.valuesSummary') }}</h3>
+          <router-link v-if="store.isValuesCompleted" to="/values" class="btn btn-secondary btn-icon-only" :title="$t('values.title')">
+            <Pencil :size="14" />
+          </router-link>
+        </div>
+        <div v-if="store.isValuesCompleted" class="values-list">
+          <div 
+            v-for="(val, index) in store.selectedValues" 
+            :key="val" 
+            class="value-item"
+            :style="{ '--delay': index }"
+          >
+            <span class="value-rank">#{{ index + 1 }}</span>
+            <span class="value-text">{{ $t(`values.list.${val}`) }}</span>
+          </div>
+        </div>
+        <div v-else class="empty-state py-6">
+          <span class="empty-icon">💎</span>
+          <p>{{ $t('dashboard.valuesHint') }}</p>
+          <router-link to="/values" class="btn btn-accent mt-4">
+            {{ $t('dashboard.startValues') }}
           </router-link>
         </div>
       </div>
@@ -179,7 +217,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus, Pencil, Trash2 } from 'lucide-vue-next'
 import { useCoachingStore, AREA_COLORS } from '../stores/coaching'
@@ -190,6 +228,15 @@ const store = useCoachingStore()
 const router = useRouter()
 const activePlan = ref<KamchiPlan | null>(null)
 const planToDelete = ref<string | null>(null)
+
+type ColorType = 'red' | 'yellow' | 'green' | 'blue'
+
+const dominantColor = computed<ColorType>(() => {
+  const p = store.colorPercentages
+  const colors: ColorType[] = ['red', 'yellow', 'green', 'blue']
+  const sorted = colors.sort((a, b) => p[b] - p[a])
+  return sorted[0] || 'green'
+})
 
 function getAreaColor(area: string) {
   return AREA_COLORS[area as LifeArea] || 'var(--accent-primary)'
@@ -224,13 +271,13 @@ function executeDelete() {
 
 .dashboard-layout {
   display: grid;
-  grid-template-columns: 0.9fr 1.25fr 1.15fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
 @media (max-width: 1200px) {
   .dashboard-layout {
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 }
@@ -504,5 +551,70 @@ function executeDelete() {
 .btn-danger:hover {
   background: hsl(0, 85%, 50%);
   transform: translateY(-1px);
+}
+
+.colors-summary-card {
+  margin-top: 1.5rem;
+}
+.colors-dashboard-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.color-badge-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.summary-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.summary-value {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+.mini-progress-bars {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  min-width: 280px;
+}
+.mini-bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.mini-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.mini-track {
+  height: 8px;
+  background: hsla(var(--hue), 20%, 80%, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.mini-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.mini-fill.red { background: #ef4444; }
+.mini-fill.yellow { background: #eab308; }
+.mini-fill.green { background: #22c55e; }
+.mini-fill.blue { background: #3b82f6; }
+
+.mini-pct {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
 }
 </style>

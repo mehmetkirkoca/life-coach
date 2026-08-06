@@ -264,6 +264,45 @@ function handleRequest(req) {
             },
             required: ["colorAnswers"]
           }
+        },
+        {
+          name: "update_plan",
+          description: "Update an existing T-GROW/KAMÇI coaching plan/commitment by its ID.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              id: { type: "string", description: "The ID of the plan to update (e.g. plan_xxxxxxxxx)" },
+              area: { type: "string", description: "Life area (health, career, social, family, friendship, finance, spiritual, growth)" },
+              subject: { type: "string", description: "Topic or subject of the coaching plan" },
+              goal: { type: "string", description: "The goal of the plan" },
+              status: { type: "string", description: "Current reality or status" },
+              cure: {
+                type: "object",
+                properties: {
+                  what: { type: "string" },
+                  why: { type: "string" },
+                  how: { type: "string" },
+                  where: { type: "string" },
+                  when: { type: "string" },
+                  who: { type: "string" },
+                  obstacle: { type: "string" }
+                }
+              },
+              commitment: { type: "string", description: "The final commitment statement" }
+            },
+            required: ["id"]
+          }
+        },
+        {
+          name: "delete_plan",
+          description: "Delete an existing T-GROW/KAMÇI coaching plan/commitment by its ID.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              id: { type: "string", description: "The ID of the plan to delete (e.g. plan_xxxxxxxxx)" }
+            },
+            required: ["id"]
+          }
         }
       ]
     });
@@ -333,6 +372,51 @@ function handleRequest(req) {
           content: [{
             type: "text",
             text: "Personality color test answers successfully updated."
+          }]
+        });
+        return;
+      }
+
+      if (name === 'update_plan') {
+        const planIndex = state.plans.findIndex(p => p.id === args.id);
+        if (planIndex === -1) {
+          sendError(id, -32602, `Plan not found with ID: ${args.id}`);
+          return;
+        }
+        
+        // Deep merge cure if provided
+        if (args.cure) {
+          state.plans[planIndex].cure = Object.assign({}, state.plans[planIndex].cure, args.cure);
+        }
+        
+        // Merge other properties
+        const { id: _, cure: __, ...otherProps } = args;
+        state.plans[planIndex] = Object.assign({}, state.plans[planIndex], otherProps);
+        
+        fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+        sendResponse(id, {
+          content: [{
+            type: "text",
+            text: `Coaching plan successfully updated for ID: ${args.id}`
+          }]
+        });
+        return;
+      }
+
+      if (name === 'delete_plan') {
+        const initialLength = state.plans.length;
+        state.plans = state.plans.filter(p => p.id !== args.id);
+        
+        if (state.plans.length === initialLength) {
+          sendError(id, -32602, `Plan not found with ID: ${args.id}`);
+          return;
+        }
+        
+        fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+        sendResponse(id, {
+          content: [{
+            type: "text",
+            text: `Coaching plan successfully deleted for ID: ${args.id}`
           }]
         });
         return;

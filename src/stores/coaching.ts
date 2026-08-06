@@ -233,7 +233,7 @@ export const useCoachingStore = defineStore('coaching', () => {
   })
 
   const isColorTestCompleted = computed(() => {
-    return colorCompleted.value
+    return colorCompleted.value || Object.keys(colorAnswers.value).length >= 16
   })
 
   // ----------------------------------------------------

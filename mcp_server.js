@@ -4,11 +4,19 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
-
 import { fileURLToPath } from 'url';
 
-const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load .env file natively if available
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  try {
+    process.loadEnvFile(envPath);
+  } catch (e) {}
+}
+
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const STATE_FILE = path.join(__dirname, 'coaching_state.json');
 
 const MIME_TYPES = {
@@ -62,7 +70,12 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const parsed = JSON.parse(body);
-        fs.writeFileSync(STATE_FILE, JSON.stringify(parsed, null, 2));
+        let existing = {};
+        if (fs.existsSync(STATE_FILE)) {
+          try { existing = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch (e) {}
+        }
+        const updated = Object.assign({}, existing, parsed);
+        fs.writeFileSync(STATE_FILE, JSON.stringify(updated, null, 2));
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: true }));
       } catch (err) {
@@ -237,6 +250,20 @@ function handleRequest(req) {
             },
             required: ["area", "subject", "goal", "status", "cure", "commitment"]
           }
+        },
+        {
+          name: "update_color_answers",
+          description: "Update or fill out the Personality Color Test answers for questions 1 to 16.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              colorAnswers: {
+                type: "object",
+                description: "Map of question ID (1..16) to an object with scores for red, yellow, green, and blue (scores 1..4)."
+              }
+            },
+            required: ["colorAnswers"]
+          }
         }
       ]
     });
@@ -294,6 +321,18 @@ function handleRequest(req) {
           content: [{
             type: "text",
             text: `Coaching plan successfully added with ID: ${newPlan.id}`
+          }]
+        });
+        return;
+      }
+
+      if (name === 'update_color_answers') {
+        state.colorAnswers = Object.assign({}, state.colorAnswers, args.colorAnswers);
+        fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+        sendResponse(id, {
+          content: [{
+            type: "text",
+            text: "Personality color test answers successfully updated."
           }]
         });
         return;

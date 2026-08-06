@@ -64,7 +64,9 @@ export interface ColorPercentages {
 }
 
 export const useCoachingStore = defineStore('coaching', () => {
-  const API_URL = 'http://localhost:3000/api/state'
+  const API_URL = typeof window !== 'undefined'
+    ? `${window.location.origin}/api/state`
+    : 'http://localhost:3000/api/state'
 
   // Active locale
   const locale = ref(localStorage.getItem('locale') || 'tr')

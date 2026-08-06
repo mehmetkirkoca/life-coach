@@ -10,6 +10,7 @@ services:
       - PORT=${PORT:-3000}
     volumes:
       - ./coaching_state.json:/app/coaching_state.json
+      - ~/.gemini/config:/host_gemini_config
     restart: unless-stopped
     stdin_open: true
     tty: true

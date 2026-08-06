@@ -14,8 +14,8 @@ COPY . .
 # Build the frontend Vue app production bundle (creates ./dist directory)
 RUN npm run build
 
-# Expose port 3000 where Node HTTP API & Static frontend are served
-EXPOSE 3000
+# Make entrypoint script executable
+RUN chmod +x entrypoint.sh
 
-# Run the unified server that provides both the Web app & MCP Stdio/HTTP API
-CMD ["node", "mcp_server.js"]
+# Run the entrypoint script that configures MCP and starts the unified server
+ENTRYPOINT ["/app/entrypoint.sh"]

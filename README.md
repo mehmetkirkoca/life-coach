@@ -27,19 +27,33 @@ The project features a **Model Context Protocol (MCP)** server and REST synchron
 
 ---
 
-## 🛠️ Docker Setup (Quick Start)
+## ⚙️ Environment Configuration (.env)
 
-You can run the frontend and backend of the application together in a single container on port `3000`.
+Application ports are configurable via the `.env` file in the project root:
 
-### 1. Start the Container:
-Run the following command in the project root:
+```env
+# Exposed port on your host machine (e.g. http://localhost:3030)
+HOST_PORT=3030
+
+# Internal application server port
+PORT=3000
+```
+
+---
+
+## ⚡ Zero-Config Docker Setup (Quick Start)
+
+To get started instantly without worrying about technical details, file paths, or JSON configuration files, simply run:
+
 ```bash
 docker compose up -d
 ```
 
-### 2. Access the Application:
+> 💡 **Automated Setup:** When the container starts up, it serves the web application on the configured host port (`HOST_PORT` in `.env`, e.g., `http://localhost:3030`) and **automatically configures the MCP configuration file** (`~/.gemini/config/mcp_config.json`) on your host machine with the exact absolute project path. No manual configuration required!
+
+### Access the Application:
 Open your browser and navigate to:
-* **Web App & API:** `http://localhost:3000`
+* **Web App & API:** `http://localhost:<HOST_PORT>` (e.g., `http://localhost:3030`)
 
 > **Note:** The `coaching_state.json` file is mounted to the host to persist your assessment scores and action plans when the container is stopped or rebuilt.
 
@@ -47,26 +61,22 @@ Open your browser and navigate to:
 
 ## 🤖 Model Context Protocol (MCP) Configuration
 
-To enable AI agents (such as Antigravity or Gemini clients) to read and modify your coaching data, configure the MCP server in your local client.
+To enable AI agents (such as Antigravity or Gemini clients) to read and modify your coaching data, the container configures MCP automatically. If you prefer running the script manually on host, run:
 
-### Configuration via Docker:
-Add the following server configuration to your `~/.gemini/config/mcp_config.json` file:
+```bash
+npm run setup
+```
+
+This script detects your environment and updates `~/.gemini/config/mcp_config.json` automatically:
+
 ```json
 {
   "mcpServers": {
     "interactive-coaching-mcp": {
-      "command": "docker",
+      "command": "node",
       "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-p",
-        "3000:3000",
-        "-v",
-        "/absolute/path/to/interactive-coaching-app/coaching_state.json:/app/coaching_state.json",
-        "interactive-coaching-app-coaching-app"
-      ],
-      "env": {}
+        "/absolute/path/to/life-coach/mcp_server.js"
+      ]
     }
   }
 }
@@ -83,27 +93,30 @@ To run the application locally without Docker:
 npm install
 ```
 
-### 2. Start the Servers:
+### 2. Run Automatic MCP Setup:
 ```bash
-# Starts REST API & MCP stdio server on port 3000
-node mcp_server.js
-
-# Starts Vite frontend dev server on port 5173/5174
-npm run dev
+npm run setup
 ```
 
-### 3. Production Build:
+### 3. Start the Servers:
 ```bash
-npm run build
+# Starts REST API & MCP stdio server on the port defined in .env
+node mcp_server.js
+
+# Starts Vite frontend dev server
+npm run dev
 ```
 
 ---
 
 ## 📂 Project Structure
 
-* `Dockerfile` - Container build steps
-* `docker-compose.yml` - Port and volume mapping configurations
+* `.env` / `.env.example` - Environment configuration for ports (`HOST_PORT`, `PORT`)
+* `Dockerfile` - Container build steps & entrypoint script setup
+* `docker-compose.yml` - Port, persistent volume, and host MCP config mappings
+* `entrypoint.sh` - Automatic Docker container startup & host MCP auto-config script
 * `mcp_server.js` - HTTP REST API, Static file server, and Stdio MCP server
 * `coaching_state.json` - JSON database holding coaching states and plans
+* `scripts/install-mcp.js` - Cross-platform automatic MCP path installer
 * `src/stores/coaching.ts` - Pinia store with API sync and polling logic
 * `src/views/` - Dashboard, Kamchi (Wizard), Values, and Assessment views

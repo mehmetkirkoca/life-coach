@@ -45,6 +45,17 @@ npm run setup
 ```
 Bu komut sistemdeki Claude Desktop ve Gemini MCP yapılandırmasını otomatik günceller.
 
+### C) Frontend (UI) Geliştirme ve Güncelleme Döngüsü
+- `src/` klasöründeki Vue bileşenleri veya stil dosyaları güncellendiğinde:
+```bash
+npm run update   # veya npm run build
+```
+- `docker-compose.yml` üzerinde `./dist:/app/dist` volume eşlemesi tanımlı olduğundan, `npm run update` çalıştırıldığı anda Docker konteynerini yeniden başlatmaya gerek kalmadan web arayüzü (`http://localhost:3030`) anında güncellenir.
+- Canlı Vite geliştirme sunucusu için:
+```bash
+npm run dev
+```
+
 ---
 
 ## 📋 4. AI Ajan Rolü ve Kuralları

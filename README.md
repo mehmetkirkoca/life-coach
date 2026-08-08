@@ -107,6 +107,12 @@ node mcp_server.js
 npm run dev
 ```
 
+### 4. Build & Update UI:
+```bash
+# Rebuilds the frontend bundle (instantly reflected inside Docker via mounted ./dist)
+npm run update
+```
+
 ---
 
 ## 📂 Project Structure

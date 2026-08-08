@@ -1,30 +1,43 @@
 <template>
   <nav class="navbar">
     <div class="nav-brand">
-      <router-link to="/dashboard" class="logo">
+      <router-link :to="store.currentRole === 'coach' ? '/coach' : '/dashboard'" class="logo">
         <span class="logo-text">Life COACH</span>
       </router-link>
     </div>
 
-    <div class="nav-links">
-      <router-link to="/dashboard" class="nav-item">
-        {{ $t('nav.dashboard') }}
-      </router-link>
-      <router-link to="/colors" class="nav-item">
-        {{ $t('nav.colors') }}
-      </router-link>
-      <router-link to="/assessment" class="nav-item">
-        {{ $t('nav.assessment') }}
-      </router-link>
-      <router-link to="/kamchi" class="nav-item">
-        {{ $t('nav.kamchi') }}
-      </router-link>
-      <router-link to="/values" class="nav-item">
-        {{ $t('nav.values') }}
-      </router-link>
+    <!-- Navigation links filtered by active role ('coach' vs 'client') -->
+    <div class="nav-links" v-if="store.currentUser">
+      <!-- Client specific menus shown ONLY when 'client' role mode is active -->
+      <template v-if="store.currentRole === 'client'">
+        <router-link to="/colors" class="nav-item">
+          {{ $t('nav.colors') }}
+        </router-link>
+        <router-link to="/assessment" class="nav-item">
+          {{ $t('nav.assessment') }}
+        </router-link>
+        <router-link to="/kamchi" class="nav-item">
+          {{ $t('nav.kamchi') }}
+        </router-link>
+        <router-link to="/values" class="nav-item">
+          {{ $t('nav.values') }}
+        </router-link>
+      </template>
     </div>
 
     <div class="nav-actions">
+      <!-- Role and Client Switcher -->
+      <RoleSwitcher v-if="store.currentUser" />
+
+      <!-- User Profile / Logout Button -->
+      <div v-if="store.currentUser" class="user-profile-badge" @click="handleLogout" title="Çıkış Yap / Profil Değiştir">
+        <div class="mini-avatar" :style="{ backgroundColor: store.currentUser.avatarColor }">
+          {{ store.currentUser.name.charAt(0) }}
+        </div>
+        <span class="user-display-name">{{ store.currentUser.name }}</span>
+        <LogOut :size="14" class="logout-icon" />
+      </div>
+
       <!-- Locale Selector -->
       <div class="lang-dropdown">
         <button @click="toggleLangMenu" class="lang-btn">
@@ -56,12 +69,16 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { LogOut } from 'lucide-vue-next'
 import { SUPPORTED_LOCALES } from '../locales'
 import { useCoachingStore } from '../stores/coaching'
+import RoleSwitcher from './RoleSwitcher.vue'
 
 const { locale } = useI18n()
 const store = useCoachingStore()
+const router = useRouter()
 const showLangMenu = ref(false)
 
 const currentLocale = computed(
@@ -77,6 +94,11 @@ function selectLocale(code: string) {
   store.saveLocale(code)
   showLangMenu.value = false
 }
+
+function handleLogout() {
+  store.logout()
+  router.push('/login')
+}
 </script>
 
 <style scoped>
@@ -84,7 +106,7 @@ function selectLocale(code: string) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2rem;
+  padding: 1rem 2rem;
   background: var(--bg-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -105,21 +127,19 @@ function selectLocale(code: string) {
   font-size: 1.25rem;
   letter-spacing: -0.03em;
 }
-.logo-icon {
-  font-size: 1.5rem;
-}
 
 .nav-links {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.35rem;
+  align-items: center;
 }
 
 .nav-item {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.85rem;
   border-radius: 0.5rem;
   transition: all 0.2s;
 }
@@ -132,6 +152,60 @@ function selectLocale(code: string) {
   background: var(--accent-primary-glow);
   box-shadow: inset 0 0 0 1px var(--accent-primary);
 }
+.nav-item.coach-item.router-link-active {
+  background: rgba(236, 72, 153, 0.15);
+  box-shadow: inset 0 0 0 1px #ec4899;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.user-profile-badge:hover {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.mini-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.user-display-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.logout-icon {
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.user-profile-badge:hover .logout-icon {
+  color: #ef4444;
+}
 
 .lang-dropdown {
   position: relative;
@@ -140,14 +214,14 @@ function selectLocale(code: string) {
 .lang-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-muted);
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.85rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.2s;
 }

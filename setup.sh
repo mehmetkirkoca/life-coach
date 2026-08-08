@@ -18,9 +18,14 @@ node scripts/install-mcp.js
 if command -v docker &> /dev/null && docker info &> /dev/null; then
     echo "🐳 Docker konteyneri başlatılıyor (docker compose up -d)..."
     docker compose up -d
-    echo "✅ Docker uygulaması http://localhost:3000 adresinde aktif!"
+    echo "✅ Docker uygulaması http://localhost:${HOST_PORT:-3030} adresinde aktif!"
 else
-    echo "ℹ️  Docker ortamı algılanmadı veya çalışmıyor. Uygulamayı lokal başlatmak için: npm run dev"
+    echo "⚠️  Docker veya Docker Daemon çalışır durumda bulunamadı."
+    echo "💡 Projede MongoDB veritabanı ve tüm servislerin sıfır-konfigürasyon ile sorunsuz çalışması için Docker önerilmektedir."
+    echo "👉 Lütfen Docker Desktop / Docker Engine'i kurup başlattıktan sonra tekrar çalıştırın:"
+    echo "   https://docs.docker.com/get-docker/"
+    echo ""
+    echo "   Docker hazır olduğunda uygulamayı başlatmak için: docker compose up -d"
 fi
 
 echo "✨ Kurulum tamamlandı! Yapay zeka asistanınız MCP araçlarını kullanmaya hazır."

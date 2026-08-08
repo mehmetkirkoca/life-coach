@@ -1,0 +1,23 @@
+# Life Coach — AI & MCP Architecture
+> Interactive Life Coaching & KAMÇI/T-GROW Goal Setting Platform with Model Context Protocol (MCP)
+
+## Architecture Overview
+- Web Frontend: Vue 3 + Pinia + Chart.js + Glassmorphism UI (Served on http://localhost:3030)
+- MCP & REST API Server: Node.js (mcp_server.js on Port 3001)
+- Database: MongoDB 7.0 with local JSON fallback (coaching_state.json)
+
+## Quick Start
+```bash
+docker compose up -d
+npm run setup
+```
+
+## Available MCP Tools for LLMs
+- `get_coaching_state`: Retrieve Wheel of Life scores, values, action plans, DISC test results.
+- `update_ratings`: Update 8 life area ratings.
+- `update_values`: Update top 5 core values.
+- `add_plan` / `delete_plan`: Manage KAMÇI / T-GROW coaching action plans.
+- `get_session_notes` / `add_session_note`: Manage coaching session notes with action items.
+- `get_coach_feedbacks` / `add_coach_feedback`: Fetch and record client-to-coach rating evaluations.
+- `update_color_answers`: Save DISC personality assessment answers.
+- `get_clients`: Fetch list of coaching clients.

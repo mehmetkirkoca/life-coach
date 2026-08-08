@@ -113,6 +113,14 @@ npm run dev
 npm run update
 ```
 
+## 👥 Quick Profiles & Seed Data
+On the login screen (`/login`), the system automatically loads seed profiles with multi-role support and 1-to-N coach-client relationships:
+* 💼 **Ahmet Yılmaz** (`ahmet@lifecoach.com` - Coach & Client) — Has clients Mustafa Demir & Ayşe Yılmaz, session notes & 5⭐ feedback.
+* 💼 **Zeynep Kaya** (`zeynep@lifecoach.com` - Coach & Client) — Has client Can Tekin.
+* 👤 **Mustafa Demir** (`mustafa@example.com` - Client)
+* 👤 **Ayşe Yılmaz** (`ayse@example.com` - Client)
+* 👤 **Can Tekin** (`can@example.com` - Client)
+
 ---
 
 ## 📂 Project Structure
@@ -122,7 +130,8 @@ npm run update
 * `docker-compose.yml` - Port, persistent volume, and host MCP config mappings
 * `entrypoint.sh` - Automatic Docker container startup & host MCP auto-config script
 * `mcp_server.js` - HTTP REST API, Static file server, and Stdio MCP server
+* `seedData.js` - MongoDB & local fallback initial users, notes, feedbacks seed data
 * `coaching_state.json` - JSON database holding coaching states and plans
 * `scripts/install-mcp.js` - Cross-platform automatic MCP path installer
 * `src/stores/coaching.ts` - Pinia store with API sync and polling logic
-* `src/views/` - Dashboard, Kamchi (Wizard), Values, and Assessment views
+* `src/views/` - Login, CoachDashboard, Dashboard, Kamchi (Wizard), Values, and Assessment views

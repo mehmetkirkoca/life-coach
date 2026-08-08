@@ -58,8 +58,21 @@ npm run dev
 
 ---
 
-## 📋 4. AI Ajan Rolü ve Kuralları
+## 👥 5. Hızlı Profil Seçimi & Hazır Seed Verileri
 
-- Danışanla iletişim kurarken empatik, motive edici ve çözüm odaklı profesyonel bir yaşam koçu tonu kullan.
-- KAMÇI / T-GROW adımlarına (Konu, Amaç, Mevcut Durum, Çareler/Seçenekler, Israr/Taahhüt) uygun eylem planları öner.
-- Veri okuma ve yazma işlemlerinde yukarıda tanımlanan MCP araçlarını doğrudan kullan.
+Uygulama açılış ekranında (`/login`) MongoDB veya yerel fallback (`seedData.js`) üzerinden aşağıdaki hazır profiller ve ilişkisel veriler otomatik olarak yüklenir:
+
+- 💼 **Ahmet Yılmaz** (`ahmet@lifecoach.com` - Rol: `coach`, `client`):
+  - Atanmış Danışanlar: *Mustafa Demir*, *Ayşe Yılmaz*.
+  - Seans Notları: Kariyer/SaaS ve DISC analizi notları yüklüdür.
+  - Koç Değerlendirmeleri: Mustafa Demir'den 5⭐ puan ve geri bildirim mevcuttur.
+- 💼 **Zeynep Kaya** (`zeynep@lifecoach.com` - Rol: `coach`, `client`):
+  - Atanmış Danışanlar: *Can Tekin*.
+- 👤 **Mustafa Demir** (`mustafa@example.com` - Rol: `client`):
+  - Koçu: Ahmet Yılmaz.
+- 👤 **Ayşe Yılmaz** (`ayse@example.com` - Rol: `client`):
+  - Koçu: Ahmet Yılmaz.
+- 👤 **Can Tekin** (`can@example.com` - Rol: `client`):
+  - Koçu: Zeynep Kaya.
+
+> 💡 **Hızlı Giriş:** Giriş sayfasında yer alan profil kartlarına tek tıkla tıklayarak koç veya danışan rolüyle doğrudan sisteme giriş yapabilirsiniz. Seed verileri sunucu ilk ayağa kalktığında MongoDB'ye otomatik yazılır.

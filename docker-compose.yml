@@ -18,6 +18,8 @@ services:
       - MONGO_URI=mongodb://mongodb:27017/life-coach
     volumes:
       - ./dist:/app/dist
+      - ./mcp_server.js:/app/mcp_server.js
+      - ./seedData.js:/app/seedData.js
       - ./coaching_state.json:/app/coaching_state.json
       - ~/.gemini/config:/host_gemini_config
     depends_on:
